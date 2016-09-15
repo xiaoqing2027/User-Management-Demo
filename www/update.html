@@ -1,0 +1,19 @@
+<div ng-controller ="updateCtr">
+	<p> i am update page!!!</p>
+	<form name="u_Form">
+		name: <input type="text" name = "u_name" ng-model="u_name" required></input>
+		<span ng-show="u_Form.u_name.$dirty && u_Form.u_name.$invalid" style="color:red"> u_name is required. </span><br>
+		title: <input type="text" ng-model="u_title" name="u_title" required></input>
+		<span ng-show=" u_Form.u_title.$dirty && u_Form.u_title.$invalid " style="color:red"> u_title is required. </span><br>
+		sex: <select ng-model="u_sex" name="u_sex" required></input>
+			  <option value="female">female</option>
+			  <option value="male">male</option>
+			</select>
+		<span ng-show="u_Form.u_sex.$dirty && u_Form.u_sex.$invalid" style="color:red"> u_sex is required. </span><br>
+		age: <input type="number" ng-model="u_age" name="u_age" required></input>
+		<span ng-show="u_Form.u_age.$dirty && u_Form.u_age.$invalid" style="color:red" min="0" max="200"> u_age is required. </span><br>
+		<!-- <button type="submit" ng-disabled="u_Form.u_name.$dirty && u_Form.u_name.$invalid || u_Form.u_title.$dirty && u_Form.u_title.$invalid || u_Form.u_sex.$dirty && u_Form.u_sex.$invalid || u_Form.u_age.$dirty && u_Form.u_age.$invalid" ng-click="update()">update</button> -->
+		<button type="submit" ng-disabled="u_Form.u_name.$invalid || u_Form.u_title.$invalid || u_Form.u_sex.$invalid || u_Form.u_age.$invalid" ng-click="update()">update</button>
+	</form>
+</div>
+</div>

@@ -1,0 +1,45 @@
+<div  ng-controller ="listCtr">
+	<div class="row" ng-init ="num=0">
+		  <div class="col-md-3">
+				<a href = "#/create"><button type="button">create</button></a>
+				<!-- <a href = "#/update"><button type="button">update</button></a> -->
+			</div>
+		  <div class="col-md-6"></div>
+		  <div class="col-md-3"><span class="glyphicon glyphicon-search"></span>
+				<input ng-model="searchText" placeholder="Search here"></input>
+			</div>
+	</div><br/>
+
+		<div>
+			<table class="table" ng-model ="selected" >
+				<tr>
+					<th ng-click = "selected = '$index';sortReverse = !sortReverse">#Num</th>
+					<th ng-click = "selected = 'name';sortReverse = !sortReverse">Name</th>
+					<th ng-click = "selected = 'title';sortReverse = !sortReverse">Title</th>
+					<th ng-click = "selected = 'sex';sortReverse = !sortReverse">Sex</th>
+					<th ng-click = "selected = 'age';sortReverse = !sortReverse">Age</th>
+					<th >Update</th>
+					<th >Delete</th>
+				</tr>
+				<!-- <tr ng-repeat = "user in users |orderBy : selected :sortReverse|  filter:searchText|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit"> -->
+				<tr ng-repeat="user in users |orderBy : selected :sortReverse | filter:searchText|limitTo:numPerPage:(currentPage-1)*numPerPage">
+					<td>{{user._id}}</td>
+					<td>{{user.name}}</td>
+					<td>{{user.title}}</td>
+					<td>{{user.sex}}</td>
+					<td>{{user.age}}</td>
+					<!-- <td ><a href="#/update/user.id"><button type="button" ng-click="fillUpdateForm()" >update</button></a></td> -->
+					<td ><button type="button" ng-click="fillUpdateForm(user._id)">update</button></td>
+					<td ><button type="button" ng-click="delete(user._id)">delete</button></td>
+				</tr>
+			</table>
+			<hr/>
+
+			<ul class="pagination">
+				  <li><a ng-click="clickPages(currentPage-1)" ng-hide="currentPage == 1" ><<</a></li>
+				  <li><a ng-repeat="p in numPages" ng-click="clickPages(p)" ng-style='{"color" : p === currentPage? "red":"" }'>{{p}}</a></li>
+				  <li><a ng-click="clickPages(currentPage+1)" ng-hide="currentPage === numPages.length">>></a></li>
+			</ul>
+		</div>
+
+</div>

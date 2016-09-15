@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset = "UTF-8">
+		<title>Angularjs</title>
+		<link rel="stylesheet" href="../bootstrap/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+		<!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+		<!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script> -->
+		<script src="angular.min.js"></script>
+		<script src="angular-route.min.js"></script>
+		<!-- <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js" type="text/javascript"></script> -->
+		<script scr="ui-bootstrap-tpls-2.1.3.min.js"></script>
+
+		<script src="myModule.js"></script>
+		<style>
+			body{
+
+			}
+			.container{
+				width: 80%;
+				margin-left: 10%;
+				margin-right: 10%;
+				background-color: lightgrey;
+			}
+			input.ng-invalid {
+			    background-color:red;
+			}
+			/*table{
+				padding-bottom: 20px;
+			}*/
+
+		</style>
+	</head>
+<body>
+	<div class="container" ng-app ="myApp" >
+		<div class = "row">
+			<h3 style="margin-left: 18px; margin-bottom: 18px"> AngularJS routing : </h3>
+		</div>
+		<a href = "#/">Home</a>
+		<a href = "#/list">list</a>
+		<a href = "#/create">create</a>
+		<hr/>
+		<div ng-view>
+		</div>
+	</div>
+</body>
+<script>
+	var app = angular.module('myApp',['ngRoute','myModule']);
+
+	app.config(['$routeProvider' ,function($routeProvider){
+		$routeProvider
+		.when('/',{
+			//templateUrl:"list.html"
+			redirectTo:'/list'
+			//template: "<h2>i am home page!!!!</h2>"
+		})
+		.when('/list', {
+			templateUrl: "list.html",
+			controller : 'listCtr'
+		})
+		.when('/create', {
+			templateUrl: "create.html",
+			controller : 'createCtr'
+		})
+		.when('/update/:userId', {
+			templateUrl: "update.html",
+			controller : 'updateCtr'
+		})
+		.otherwise('/list', {
+			templateUrl: "list.html"
+		});
+	}]);
+
+	// app.controller('myCtr',['$scope', 'myService', function($scope,myService){
+	// 	console.log("bbbbb");
+	// }]);
+
+	app.controller('listCtr', function($scope, myService,$location){
+
+//************** initilize variables of pagination ************
+		$scope.currentPage = 1;
+ 		$scope.numPerPage = 3;
+		$scope.numPages=[];
+		$scope.numPagesLength=0;
+//************** initilize other variables of listCtr ************
+		$scope.selected ='';
+		$scope.users=[];
+		$scope.sortReverse = true;
+		//pass $scope to my service, so quick
+		myService.list($scope);
+//************** show updated page ************
+		$scope.fillUpdateForm = function(updateId){
+			$location.path('/update/'+updateId);
+		}
+//************** do delete  ************
+		$scope.delete = function(userId){
+			myService.delete(userId);
+			$location.path('/');
+		}
+//************** check $scope.users for pagination ************
+		$scope.$watch("users", function (newValue, oldValue, scope) {
+				$scope.numPagesLength = Math.ceil(newValue.length / $scope.numPerPage);
+				for(var i = 0; i < $scope.numPagesLength; i++){
+					$scope.numPages.push(i+1);
+				}
+		}, true);
+//************** do click every page  ************
+		$scope.clickPages = function(page){
+			$scope.currentPage = page;
+		}
+		// $scope.$watch("numPagesLength",function (newValue, oldValue, scope) {
+		// 	console.log("aaa: "+newValue);
+		// 	$location.path('/');
+		// }, true );
+
+	});
+
+	app.controller('createCtr', function($scope,myService,$location){
+		$scope.add = function(){
+			myService.add($scope);
+			$location.path('/list');
+		};
+	});
+
+	app.controller('updateCtr', function($scope,myService,$routeParams,$location){
+
+		var updateId =$routeParams.userId;
+		myService.get(updateId,$scope);
+
+		$scope.update = function(){
+			myService.update(updateId,$scope);
+			$location.path('/list');
+		};
+	});
+
+</script>
+</html>

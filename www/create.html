@@ -1,0 +1,19 @@
+<div ng-controller ="createCtr">
+	<p> i am create page!!!</p>
+
+	<form name="c_Form">
+		name: <input type="text" name = "c_name" ng-model="c_name" required></input>
+		<span ng-show="c_Form.c_name.$dirty && c_Form.c_name.$invalid" style="color:red"> c_name is required. </span><br>
+		title: <input type="text" ng-model="c_title" name="c_title" required></input>
+		<span ng-show=" c_Form.c_title.$dirty && c_Form.c_title.$invalid " style="color:red"> c_title is required. </span><br>
+		sex: <select ng-model="c_sex" name="c_sex" required></input>
+			  <option value="female">female</option>
+			  <option value="male">male</option>
+			</select>
+		<span ng-show="c_Form.c_sex.$dirty && c_Form.c_sex.$invalid" style="color:red"> c_sex is required. </span><br>
+		age: <input type="number" ng-model="c_age" name="c_age" required></input>
+		<span ng-show="c_Form.c_age.$dirty && c_Form.c_age.$invalid" style="color:red" min="0" max="200"> c_age is required. </span><br>
+		<!-- <button type="submit" ng-disabled="c_Form.c_name.$dirty && c_Form.c_name.$invalid || c_Form.c_title.$dirty && c_Form.c_title.$invalid || c_Form.c_sex.$dirty && c_Form.c_sex.$invalid || c_Form.c_age.$dirty && c_Form.c_age.$invalid" ng-click="add()">create</button> -->
+		<button type="submit" ng-disabled="c_Form.c_name.$invalid || c_Form.c_title.$invalid ||  c_Form.c_sex.$invalid || c_Form.c_age.$invalid" ng-click="add()">create</button>
+	</form>
+</div>
