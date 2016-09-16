@@ -7,4 +7,4 @@ This simple user-management-demo mainly implemented:
   | Front-end: Filter, service and pagination by using AngularJS, Bootstrap, HTML and CSS.
 
 
-<img src="screenshot.png" width="300">
+<img src="screenshot.png">
