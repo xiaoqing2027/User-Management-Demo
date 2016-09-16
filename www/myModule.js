@@ -49,8 +49,9 @@ angular.module("myModule", [])
                     console.log("failed to update a new user");
                 });
             },
-            delete: function(userId) {
+            delete: function(userId,$scope) {
                 $http.delete('/api/user/' + userId).then(function mySuccess(res) {
+                    $scope.users = res.data;
                     console.log("sucessed to delte a new user");
                 }, function myError(res) {
                     console.log("failed to delete a new user");

@@ -21,14 +21,12 @@
 					<th >Update</th>
 					<th >Delete</th>
 				</tr>
-				<!-- <tr ng-repeat = "user in users |orderBy : selected :sortReverse|  filter:searchText|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit"> -->
-				<tr ng-repeat="user in users |orderBy : selected :sortReverse | filter:searchText|limitTo:numPerPage:(currentPage-1)*numPerPage">
+				<tr ng-repeat="user in users |orderBy : selected :sortReverse |limitTo:numPerPage:(currentPage-1)*numPerPage | filter:searchText">
 					<td>{{user._id}}</td>
 					<td>{{user.name}}</td>
 					<td>{{user.title}}</td>
 					<td>{{user.sex}}</td>
 					<td>{{user.age}}</td>
-					<!-- <td ><a href="#/update/user.id"><button type="button" ng-click="fillUpdateForm()" >update</button></a></td> -->
 					<td ><button type="button" ng-click="fillUpdateForm(user._id)">update</button></td>
 					<td ><button type="button" ng-click="delete(user._id)">delete</button></td>
 				</tr>

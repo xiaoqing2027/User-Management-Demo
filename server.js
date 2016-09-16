@@ -102,8 +102,15 @@ router.route('/user/:id')
         if(err){
           res.send(err);
         }
-        res.json({ message: 'Successfully deleted' });
+        console.log("delete user successfully");
+        User.find(function(err, users){
+          if(err){
+            res.send(err);
+          }
+          res.json(users);
+        });
       });
+
   });
 
 

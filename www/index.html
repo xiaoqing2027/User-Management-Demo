@@ -97,24 +97,24 @@
 		}
 //************** do delete  ************
 		$scope.delete = function(userId){
-			myService.delete(userId);
-			$location.path('/');
+			myService.delete(userId,$scope);
 		}
 //************** check $scope.users for pagination ************
 		$scope.$watch("users", function (newValue, oldValue, scope) {
 				$scope.numPagesLength = Math.ceil(newValue.length / $scope.numPerPage);
+				var tmp =[];
 				for(var i = 0; i < $scope.numPagesLength; i++){
-					$scope.numPages.push(i+1);
+					tmp.push(i+1);
+				}
+				$scope.numPages = tmp.slice();
+				if($scope.currentPage > $scope.numPages.length){
+					$scope.currentPage = $scope.numPages.length;
 				}
 		}, true);
 //************** do click every page  ************
 		$scope.clickPages = function(page){
 			$scope.currentPage = page;
 		}
-		// $scope.$watch("numPagesLength",function (newValue, oldValue, scope) {
-		// 	console.log("aaa: "+newValue);
-		// 	$location.path('/');
-		// }, true );
 
 	});
 
